@@ -1,0 +1,41 @@
+---
+
+#- include: cleanup.yaml
+- include: install.yaml
+
+- name: Create local directory to work from
+  file: path={{workdir}} state=directory owner=root group=root mode=0751
+
+- name: Create ansible directory
+  file: path=/etc/ansible state=directory owner=root group=root mode=0644
+
+- name: Copy ansible inventory file to client
+  copy: src=hosts dest=/etc/ansible/hosts owner=root group=root mode=0644
+
+- name: Copy .cfg file with some workarounds
+  copy: src=ansible.cfg dest=/etc/ansible/ansible.cfg owner=root group=root mode=0644
+
+- name: Copy ansible.conf file to upstart
+  copy: src=ansible.conf dest=/etc/init/ansible.conf owner=root group=root mode=0644
+
+- name: Check upstart ansible script
+  shell: initctl list |grep ansible
+
+- include: ssh_agent_service.yml
+
+
+
+
+#- name: Git checkout from Ansible Pull repo
+#  git: repo=https://github.com/rafaelnize/ansible_pull.git
+#       dest={{workdir}}
+
+#- name: Create crontab entry to clone/pull git repository
+#  template: src=etc_cron.d_ansible-pull.j2 dest=/etc/cron.d/ansible-pull owner=root group=root mode=0644
+#  notify:
+#   - restart crond service
+
+#- name: Create logrotate entry for ansible-pull.log
+#  template: src=etc_logrotate.d_ansible-pull.j2 dest=/etc/logrotate.d/ansible-pull owner=root group=root mode=0644
+#  notify:
+#   - restart crond service

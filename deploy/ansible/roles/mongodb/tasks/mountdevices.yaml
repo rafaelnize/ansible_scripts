@@ -1,0 +1,29 @@
+
+---
+
+- filesystem: fstype=ext4 dev=/dev/xvdi
+
+- filesystem: fstype=ext4 dev=/dev/xvdj
+
+- filesystem: fstype=ext4 dev=/dev/xvdl
+
+
+# create a directory if it doesn't exist
+- file: path=/data state=directory mode=0755
+
+# create a directory if it doesn't exist
+- file: path=/log state=directory mode=0755
+
+# create a directory if it doesn't exist
+- file: path=/journal state=directory mode=0755
+
+-  mount: name=/data src=/dev/xvdi fstype=ext4 state=mounted
+-  mount: name=/journal src=/dev/xvdj fstype=ext4 state=mounted
+-  mount: name=/log src=/dev/xvdl fstype=ext4 state=mounted
+
+
+# change ownership and permissions
+- file: path=/data owner=mongodb group=mongodb mode=0755
+- file: path=/journal owner=mongodb group=mongodb mode=0755
+- file: path=/log owner=mongodb group=mongodb mode=0755
+- file: src=/journal dest=/data/journal state=link

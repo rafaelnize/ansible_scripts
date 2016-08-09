@@ -1,0 +1,6 @@
+---
+# handlers file for crond
+
+- name: restart crond service
+  service: name="cron" state=restarted
+

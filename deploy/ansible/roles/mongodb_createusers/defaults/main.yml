@@ -1,0 +1,4 @@
+---
+# defaults file for nize.mongodb_createusers
+mongo_root_username: "root"
+mongo_root_password: "Magazine1234"

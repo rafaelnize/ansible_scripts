@@ -1,0 +1,15 @@
+- hosts: "security_group_{{ project }}-mongo-sg"
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+     - {role: yaegashi.blockinfile }
+     - {role: mongodb_hardening }
+
+
+
+
+
+
+
+

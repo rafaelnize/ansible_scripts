@@ -1,0 +1,18 @@
+---
+
+- name: copy createuser file to the primary server
+  template: src="create_adm_user.js.j2" dest="{{ mongodb_jspath }}/create_adm_user.js" mode=0400
+
+- name: start mongod service on primary instance
+  service: name=mongod state=started
+
+- name: execute createuser js script file
+  command: /usr/bin/mongo {{ mongodb_server1 }}/admin {{ mongodb_jspath }}\create_adm_user.js
+  register: result
+  ignore_errors: yes
+  
+- name: stop mongod service on primary instance
+  service: name=mongod state=stopped
+
+- name: kill any mongodb process
+  command: killall mongod

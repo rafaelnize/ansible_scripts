@@ -1,0 +1,8 @@
+---
+
+- name: stop mongod service on all instances
+  service: name=mongod state=stopped
+
+- name: kill all remain mongod process
+  command: killall mongod
+  ignore_errors: yes

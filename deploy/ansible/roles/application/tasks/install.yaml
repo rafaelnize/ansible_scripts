@@ -1,0 +1,23 @@
+---
+
+# task: install.yaml
+
+# Install dependencies
+
+- name: install Docker software dependencies
+  apt: name=python-pip state=latest
+
+- name: install docker-py
+  pip: name=docker-py
+
+
+
+# Create mount point
+
+# vars:
+#   isDirCreated: false
+
+- name: create directory on host
+  file: path=/var/data state=directory mode=0755
+#   - stat: path/var/data
+#     register: st

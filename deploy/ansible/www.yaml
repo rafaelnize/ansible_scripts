@@ -1,0 +1,22 @@
+---
+#www.yaml
+
+- hosts: "security_group_{{ project }}_auto_web_in"
+  remote_user: ubuntu
+  sudo: yes
+  pre_tasks:
+        - shell: echo 'I":" Beginning to configure server..'
+  roles:
+    - base
+    - docker
+    - ansible_pull
+
+    #- nginx
+    #- application
+  tasks:
+    - name: now upstart script ansible.conf starts
+      shell: service ansible restart
+
+
+  post_tasks:
+        - shell: echo 'I":" Done configuring server...'

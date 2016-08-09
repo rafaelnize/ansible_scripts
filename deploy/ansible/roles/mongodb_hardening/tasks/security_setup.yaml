@@ -1,0 +1,56 @@
+---
+- name: create directory
+  file: path=/etc/mongodb state=directory recurse=yes
+  delegate_to: "localhost"
+
+- name: execute openssl if installed
+  shell: openssl rand -base64 741 > /etc/mongodb/mongodb-keyfile
+  delegate_to: "localhost"
+
+- name: create directory
+  file: path=/srv/mongodb state=directory recurse=yes
+
+#- name: set file permission for root on existing paths
+#  file: path="/srv/mongodb/mongodb-keyfile" owner="root" group="root" mode=0660
+
+- name: copy set mongodb-keyfile for each member
+  copy: src="/etc/mongodb/mongodb-keyfile" dest="/srv/mongodb/mongodb-keyfile"
+
+
+- name: change authentication and authorization for mongod
+  blockinfile:
+    state: present
+    marker: "### {mark} Updated automatically ###"
+    dest: /etc/mongod.conf
+    block:   |
+        security:
+            keyFile: /srv/mongodb/mongodb-keyfile
+            clusterAuthMode: keyFile
+            authorization: enabled
+            javascriptEnabled: true
+
+
+        
+#- name: copy temp file to append mongodb.conf file
+#  copy: src="mongodbconfappend" dest="/tmp/mongodbconfappend"
+
+#- name: append mongodb.conf file
+#  shell: cat /tmp/mongodbconfappend >> /etc/mongodb.conf
+
+#- name: set mongodb-keyfile permissions
+#  file: path="/srv/mongodb/mongodb-keyfile" mode=0600
+#  delegate_to: "localhost"
+
+- name: set file permission
+  file: path="/srv/mongodb/mongodb-keyfile" owner="mongodb" group="mongodb" mode=0400
+  notify:
+     - mongodb started
+
+- name: starting up mongodb service
+  service: name=mongod state=restarted
+
+#- name: append mongod conf for keyfile support
+#  shell: echo "keyfile = /srv/mongodb/mongodb-keyfile" >>  /etc/mongod.conf
+#  notify:
+#    - mongodb restart
+

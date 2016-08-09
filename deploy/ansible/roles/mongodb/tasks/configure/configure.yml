@@ -1,0 +1,34 @@
+---
+
+# configure tasks
+
+
+- name: Configure mongodb
+  template: src=../../templates/mongodb30.conf.j2 dest=/etc/mongod.conf owner=root group=root mode=0644
+  notify: mongodb reload
+
+#### Fine tunning for mongodb processes on AWS
+- lineinfile: dest=/etc/security/limits.conf regexp="^soft nofile" line="soft nofile 64000" state=present create=yes
+- lineinfile: dest=/etc/security/limits.conf regexp="^hard nofile" line="hard nofile 64000" state=present create=yes
+- lineinfile: dest=/etc/security/limits.conf regexp="^soft nproc" line="soft nproc 32000"  state=present create=yes
+- lineinfile: dest=/etc/security/limits.conf regexp="^hard nproc" line="hard nproc 32000"  state=present create=yes
+
+- lineinfile: dest=/etc/security/limits.d/90-nproc.conf regexp="^soft nproc" line="soft nproc 32000" state=present create=yes
+- lineinfile: dest=/etc/security/limits.d/90-nproc.conf regexp="^hard nproc" line="hard nproc 32000" state=present create=yes
+
+
+- name: copy udev rules
+  copy: src="../../files/85-ebs.rules" dest=/etc/udev/rules.d/ owner=root mode=0644
+
+
+- name: set keepalive parameter for best net performance
+  lineinfile: dest=/etc/sysctl.conf regexp="^net.ipv4.tcp_keepalive_time" line="net.ipv4.tcp_keepalive_time = 120" state=present
+
+
+- name: Configure log rotation
+  template: src=../../templates/logrotate.conf.j2 dest=/etc/logrotate.d/mongodb.conf
+  notify:
+    - mongodb restart
+
+     
+

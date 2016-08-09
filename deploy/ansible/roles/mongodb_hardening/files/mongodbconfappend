@@ -1,0 +1,5 @@
+security:
+   keyFile: /srv/mongodb/mongodb-keyfile
+   clusterAuthMode: keyFile
+   authorization: enabled
+   javascriptEnabled:  true

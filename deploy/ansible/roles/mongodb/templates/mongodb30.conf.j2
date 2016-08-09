@@ -1,0 +1,34 @@
+systemLog:
+   destination: file
+   path: {{ logpath }}
+   logAppend: true
+   timeStampFormat: iso8601-utc
+
+storage:
+   directoryPerDB: true
+   dbPath: {{ dbpath }}
+   journal:
+      enabled: true
+   engine: "wiredTiger"
+   wiredTiger:
+      engineConfig:
+        cacheSizeGB: 8
+        journalCompressor: zlib
+      collectionConfig:
+         blockCompressor: zlib
+      indexConfig:
+         prefixCompression: true
+
+processManagement:
+   fork: {{ fork }}
+net:
+   bindIp: {{ bind_ip }}
+   port: {{ port }}
+   unixDomainSocket:
+        enabled : true
+
+   http:
+      enabled: {{ httpinter }}
+      JSONPEnabled: true
+
+

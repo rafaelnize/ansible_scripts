@@ -1,0 +1,16 @@
+---
+
+#- name: install ntp package
+#  action: apt name=ntp state=present update_cache=yes
+
+#- name: stop ntp service
+#  service: name=mongod state=stopped enabled=yes
+
+#- name: execute ntpdate
+#  command: ntpdate 0.ubuntu.pool.ntp.org
+
+#- name: start ntp service
+#  service: name=mongod state=restarted enabled=yes
+  
+
+

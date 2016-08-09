@@ -1,0 +1,49 @@
+---
+# Playbook for Database Servers
+# filename: db.yml
+
+#- hosts: tag_Name_terraform_mongo-01
+#  remote_user: ubuntu
+#  sudo: yes
+#  roles:
+#    - {role: yaegashi.blockinfile }
+#    - {role: mongodb_repset }
+
+#####  Setup replicaset on the rest of mongo servers     #####################
+
+
+- hosts: "security_group_{{ project }}-mongo-sg"
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+    - {role: yaegashi.blockinfile }
+
+  tasks:
+    - name: Ensure mongodb is started
+      service: name=mongod state=started
+
+    - name: set mongodb.conf file
+      blockinfile:
+         dest: /etc/mongod.conf
+         block:   |
+            replication:
+               replSetName: {{ replSet }}
+
+    - name: stop mongod service
+      service: name=mongod state=stopped
+
+    - name: kill mongod processes ungracefully
+      command: killall mongod
+
+    - name: start mongod again
+      service: name=mongod state=restarted
+
+
+
+- hosts: "tag_Name_{{ project }}-tf-{{ primary_db }}"
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+    - {role: yaegashi.blockinfile }
+    - {role: mongodb_repset }
+

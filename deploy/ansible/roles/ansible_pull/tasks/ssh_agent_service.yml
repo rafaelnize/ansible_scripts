@@ -1,0 +1,10 @@
+---
+
+- name: Install ssh agent service
+  apt:  name=openssh-client state=present
+
+- name: Copy ssh key to be used by git clone or pull
+  copy: src=ansible_pull dest=/etc/ansible/ansible_pull owner=root group=root mode=400
+
+- name: Copy ssh PUBLIC key to be used by git clone or pull
+  copy: src=ansible_pull.pub dest=/etc/ansible/ansible_pull.pub owner=root group=root mode=600

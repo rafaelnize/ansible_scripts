@@ -1,0 +1,6 @@
+---
+# handlers file for nize.mongodb_createusers
+
+
+- name: stop mongod
+  service: name=mongod state=stopped

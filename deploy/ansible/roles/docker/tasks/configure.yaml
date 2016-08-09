@@ -1,0 +1,12 @@
+---
+# configure Docker service
+
+- name: start docker and ensure it runs after boot
+  service: name=docker state=started enabled=yes
+      
+- name: insert ubuntu on docker
+  user: name=ubuntu groups=docker
+
+
+
+

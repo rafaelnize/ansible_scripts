@@ -1,0 +1,16 @@
+---
+# Playbook for Database Servers
+# filename: db.yml
+- hosts: "security_group_{{ project }}-mongo-sg"
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+     - {role: yaegashi.blockinfile }
+     - {role: base    }
+     - {role: mongodb }
+    # - {role: mongodb_hardening }
+ 
+- include: mongodb_create_admin_user.yaml
+- include: mongodb_security.yaml
+- include: mongodb_rep_setup.yaml

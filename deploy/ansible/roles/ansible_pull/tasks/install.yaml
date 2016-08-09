@@ -1,0 +1,22 @@
+---
+
+- name: install software dependencies
+  apt: name=python-apt update_cache=yes
+
+- name: install git package
+  apt: name=git state=present
+
+- name: install python dependencies for python-pip
+  apt: name=python state=present
+
+- name: install python-dev dependencies for python-pip
+  apt: name=python-dev state=present
+
+- name: install python-dev dependencies for python-software-properties
+  apt: name=python-software-properties state=present
+
+- name: install pip package
+  apt: name=python-pip state=present
+
+- name: Install ansible using pip Install
+  pip: name=ansible extra_args='--upgrade'

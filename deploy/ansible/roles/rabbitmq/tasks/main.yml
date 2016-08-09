@@ -1,0 +1,10 @@
+---
+# tasks file for rabbitmq
+
+- include: testenv_Ubuntu.yml
+  when: ansible_os_family == 'Debian'
+
+- include: install.yml
+  when: ansible_os_family == 'Debian'
+
+  

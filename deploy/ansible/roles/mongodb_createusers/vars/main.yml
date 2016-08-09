@@ -1,0 +1,7 @@
+---
+
+mongodb_server1: "terraform_mongo-01.mlg-a.intranet:27017"
+mongodb_server2: "terraform_mongo-02.mlg-a.intranet:27017"
+mongodb_server3: "terraform_mongo-03.mlg-a.intranet:27017"
+mongodb_jspath: "/home/ubuntu/"
+

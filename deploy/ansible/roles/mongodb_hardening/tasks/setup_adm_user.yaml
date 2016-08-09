@@ -1,0 +1,7 @@
+---
+
+- name: copy createuser file to the primary server
+  template: src="create_adm_user.js.j2" dest="{{ mongodb_jspath }}/create_adm_user.js" mode=0400
+
+- name: execute createuser js script file
+  command: /usr/bin/mongo {{ mongodb_server1 }}/admin {{ mongodb_jspath }}\create_adm_user.js

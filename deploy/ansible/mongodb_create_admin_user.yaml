@@ -1,0 +1,15 @@
+---
+# Playbook for Database Servers
+# filename: db.yml
+
+- hosts: "tag_Name_{{ project }}-tf-{{ primary_db }}"
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+    - {role: mongodb_createusers }
+    
+  
+  
+
+
+

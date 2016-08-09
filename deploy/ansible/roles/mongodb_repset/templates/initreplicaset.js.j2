@@ -1,0 +1,42 @@
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+
+
+
+var cfg = { _id: '{{ replSet }}',
+    members: [
+        { _id: 0, host: '{{ mongodb_server1 }}'},
+        { _id: 1, host: '{{ mongodb_server2 }}'},
+        { _id: 2, host: '{{ mongodb_server3 }}'},
+    ]
+};
+
+var error = rs.initiate(cfg);
+
+
+
+//rs.add("{{ mongodb_server2 }}");
+
+sleep(5000);
+
+
+//rs.add("{{ mongodb_server3 }}");
+
+sleep(5000);
+
+rs.status();
+
+sleep(5000);
+
+
+printjson(error);
+
+sleep(5000);
+

@@ -1,0 +1,174 @@
+---
+
+# configure.yaml
+
+#- name: data container
+#  docker:
+#     docker_api_version: 1.18
+#     name: mydata
+#     image: ubuntu
+#     state: present
+#     volumes:
+#       - /var/data
+
+#- name: application container
+#  docker:
+#    docker_api_version: 1.18
+#    name: myapplication
+#    image: nginx
+#    net: host  # Fix error invalid network mode default
+#    state: reloaded
+#    pull: always
+#    ports:
+#     - "80:9000"
+#     - "127.0.0.1:8081:9001/tcp"
+
+
+- name: obsolete container
+  docker:
+    docker_api_version: 1.18
+    image: ubuntu
+    state: absent
+
+- name: obsolete container
+  docker:
+    docker_api_version: 1.18
+    image: nginx
+    state: absent
+
+
+
+
+
+#- name: create directory on host
+#  file: path=/tmp/dockerbuild/src state=directory mode=0755
+
+#- name: copy content files to the docker's build directory
+#  copy: src="NodeJsFiles/package.json" dest=/tmp/dockerbuild/
+
+#- name: copy nginx config file
+#  copy: src="conf/default.conf" dest=/tmp/dockerbuild/src
+
+#- name: copy Dockerfile to the docker's build directory
+#  copy: src="NodeJsFiles/Dockerfile"  dest=/tmp/dockerbuild/
+
+#- name: copy Dockerfile to the docker's build directory
+#  copy: src="NodeJsFiles/index.js"  dest=/tmp/dockerbuild/
+
+
+- name: create directory on host
+  file: path=/tmp/dockerbuild/src state=directory mode=0755
+
+#- name: copy content files to the docker's build directory
+#  copy: src="Ubuntu/package.json" dest=/tmp/dockerbuild/
+
+#- name: copy nginx config file
+#  copy: src="conf/default.conf" dest=/tmp/dockerbuild/src
+
+- name: copy Dockerfile to the docker's build directory
+  copy: src="Ubuntu/Dockerfile"  dest=/tmp/dockerbuild/
+
+- name: build ubuntu container image
+  command: docker build -t ubuntu /tmp/dockerbuild
+
+#- name: copy Dockerfile to the docker's build directory
+#  copy: src="NodeJsFiles/index.js"  dest=/tmp/dockerbuild/
+
+
+
+
+
+
+############# Angular ########################
+
+#- name: create directory on host
+#  file: path=/tmp/angularbuild/retiraloja state=directory mode=0755
+
+#- name: copy content files to the docker's build directory
+#  copy: src="AngularJsFiles/" dest=/tmp/angularbuild/
+
+#- name: build angular container image
+#  command: docker build -t angularjs /tmp/angularbuild
+
+
+###########################################
+
+# Nao usar o modulo docker_image. Esta depreciado (deprecated)  Use command:
+# Se o for trabalhar com entrega continua usando a imagem do ambiente de dev, comente abaixo para nao gerar imagem
+#- name: build docker image
+#  command: docker build -t build-by-ansible:ex3 /tmp/dockerbuild
+
+
+# Stop and remove a container with the specified name.
+
+#- name: obsolete container
+#  docker:
+#    docker_api_version: 1.18
+#    image: build-by-ansible:ex3
+#    state: absent
+
+
+#- name: obsolete container
+#  docker:
+#    docker_api_version: 1.18
+#    image: nginx
+#    state: absent
+
+#- name: obsolete container
+#  docker:
+#    docker_api_version: 1.18
+#    image: angularjs
+#    state: absent
+
+#- name: obsolete container
+#  docker:
+#    docker_api_version: 1.18
+#    image: nginx
+#    state: absent
+
+
+
+
+
+# REMOVE Containers anteriores
+#- name: Remove containers anteriores usado para limpeza 
+#  command: docker rm -f $(docker ps -aq)
+
+# REMOVE Containers anteriores
+#- name: Remove containers anteriores usado para limpeza
+#  command: docker rm -f $(docker images -q)
+
+
+
+
+# Esqueça docker run pela API. Não funciona direito
+#- name: run docker container
+#  command: docker run -p 8080:8080 -d build-by-ansible:ex3
+#  command: docker run --name nginx-container -p 8080:80 -d nginx
+
+# Esqueça docker run pela API. Não funciona direito
+#- name: run docker angular container
+#  command: docker run -p 8080:8080 -d angularjs
+
+
+# Esqueça docker run pela API. Não funciona direito
+#- name: run docker angular container
+#  command: docker run -p 80:8080 -d nginx
+
+
+
+
+
+# Roda o container
+#- name: run docker container
+#  docker:
+#        docker_api_version: 1.18
+#        name: nodejs
+#        image: build-by-ansible:ex3
+#        state: reloaded
+#        net: bridge
+#        ports: "0.0.0.0:9000:8080"
+#        #use_tls: encrypt
+
+
+

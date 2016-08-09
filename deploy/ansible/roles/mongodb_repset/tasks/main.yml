@@ -1,0 +1,5 @@
+---
+
+# tasks file
+
+- include: configure_replica.yaml

@@ -1,0 +1,6 @@
+{"primary_db" : "mongo-01", "db_security_group" : "security_group_terraform_mongodb01", "replSet" : 
+"rep01", "mongo_root_username" : "mongoadm", "mongo_root_password" : "Magazine123",  
+"mongodb_server1" : "retira-loja-tf-mongo-01.mlg-b.intranet:27017",
+"mongodb_server2" : "retira-loja-tf-mongo-02.mlg-b.intranet:27017",
+"mongodb_server3" : "retira-loja-tf-mongo-03.mlg-b.intranet:27017"
+}

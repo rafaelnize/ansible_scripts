@@ -1,0 +1,11 @@
+
+conn = new Mongo();
+db = conn.getDB("admin");
+// db = connect("localhost:27017/admin")
+
+
+db.createUser( {
+    user: "{{ mongo_root_username }}",
+    pwd: "{{ mongo_root_password }}",
+    roles: [ { role: "root", db: "admin" } ]
+  });

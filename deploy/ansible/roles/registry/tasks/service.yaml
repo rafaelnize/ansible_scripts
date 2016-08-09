@@ -1,0 +1,15 @@
+---
+# service.yaml
+- name: start docker daemon
+  service:   name=docker state=started enabled=yes
+
+# Roda o container
+- name: run docker container
+  docker:
+        #docker_api_version: 1.18
+        name: nodejs
+        image: registry:2
+        state: started
+        net: bridge
+        ports: "0.0.0.0:5000:5000"
+        #use_tls: encrypt

@@ -1,0 +1,11 @@
+---
+
+##### Operating system tasks ################
+- include: setup_os_users.yml
+- include: mountdevices.yaml
+
+##### Application tasks #####################
+- include: install_mongodb.yml
+- include: startup.yml
+- include: stop.yml
+

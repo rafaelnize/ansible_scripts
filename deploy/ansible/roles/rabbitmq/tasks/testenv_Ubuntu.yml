@@ -1,0 +1,13 @@
+---
+
+### ONLY for testing purposes !
+
+- name: disable apparmor
+  service: name=apparmor state=stopped enabled=no
+
+- name: uninstall apparmor
+  action: apt name=apparmor state=absent
+
+- name: disable iptables
+  service: name=iptables state=stopped enabled=no
+  ignore_errors: yes

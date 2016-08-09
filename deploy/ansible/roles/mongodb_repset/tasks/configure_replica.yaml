@@ -1,0 +1,40 @@
+---
+# filename: roles/mysql/tasks/configure.yml
+- name: create mongod replicaset config
+  template: src="initreplicaset.js.j2" dest="{{ mongodb_jspath }}/initreplicaset.js" mode=0644
+
+- name: Ensure mongodb is started
+  service: name=mongod state=started
+
+
+- name: set mongodb.conf file
+  blockinfile:
+    insertafter: EOF
+    state: present
+    dest: /etc/mongod.conf
+    block:   |
+       replication:
+          replSetName: {{ replSet }}
+
+
+- name: stop mongod service
+  service: name=mongod state=stopped
+
+- name: kill mongod processes ungracefully
+  command: killall mongod
+   
+- name: start mongod again
+  service: name=mongod state=started
+
+- name: execute initreplicaset script file
+  command: /usr/bin/mongo -u {{ mongodb_root_login }} -p {{ mongodb_root_password }} {{ mongodb_server1 }}/admin {{ mongodb_jspath }}\initreplicaset.js
+  ignore_errors: yes
+
+#- name: copy content files
+#  copy: src="initreplicaset.js" dest=/home/ubuntu/
+
+#- name: Start mongod with replset
+#  command: /usr/bin/mongod --config /etc/mongod.conf --replSet replicaset01
+
+#- name: Connect to first instance
+#  command: mongo teste_db1.mlg-a.intranet/admin /home/ansible/initreplicaset.js

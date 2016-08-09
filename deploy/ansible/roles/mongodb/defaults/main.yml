@@ -1,0 +1,39 @@
+---
+
+mongodb_enabled: yes
+mongodb_packages:
+  - python-selinux
+  - python-pymongo
+  - mongodb-org
+
+mongodb_conf:
+  auth: "false"
+  bind_ip: 0.0.0.0
+  dbpath: /data
+  # diaglog: 0 # deprecated
+  fork: "true"
+  logappend: "true"
+  logpath: "/log/mongod.log"
+  noauth: "true"
+  port: 27017
+  #replSet: replicaset01/teste_db1.mlg-a.intranet:27017/teste_db2.mlg-a.intranet:27017/teste_db3.mlg-a.intrane:27017
+  replSet: rep01
+  rest: true
+  httpinterface: true
+  #keyfile: /srv/mongodb/mongodb-keyfile
+  #mongodb_shell: {
+  # db-name:
+  #    rs.initiate()
+
+  #}                                 # Define mongo shell commands to run
+
+
+# Log rotation
+mongodb_logrotate: yes                             # Rotate mongodb logs.
+mongodb_logrotate_options:
+  - compress
+  - copytruncate
+  - daily
+  - dateext
+  - rotate 7
+  - size 10M

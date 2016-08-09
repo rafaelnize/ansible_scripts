@@ -1,0 +1,6 @@
+---
+# handler main.yaml
+
+- name:  restart Docker service
+  service:   name=docker state=restarted
+   

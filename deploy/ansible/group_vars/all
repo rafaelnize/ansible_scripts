@@ -1,0 +1,8 @@
+
+
+#mysql_bind: "{{ ansible_eth0.ipv4.address }}"
+
+#primary_db: mongo-01
+#db_security_group: security_group_terraform_mongodb01
+#replSet: rep01
+#project: retira-loja
